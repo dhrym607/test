@@ -1,0 +1,69 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>子供向けセキュリティクイズ</title>
+    <style>
+        body { font-family: sans-serif; background: #f0f8ff; padding: 20px; }
+        .quiz-container { max-width: 600px; margin: auto; background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .question { font-weight: bold; }
+        .options label { display: block; margin: 8px 0; }
+        .result { margin-top: 20px; font-size: 1.2em; font-weight: bold; }
+        button { margin-top: 20px; padding: 10px 20px; font-size: 1em; border-radius: 8px; background-color: #4CAF50; color: white; border: none; }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>子供向けセキュリティクイズ</h1>
+        <form id="quizForm">
+            <div class="question">1. インターネットで知らない人からメッセージが来たら、どうするべき？</div><div class="options"><label><input type="radio" name="q0" value="A"> A. すぐに会いに行く</label><label><input type="radio" name="q0" value="B"> B. 無視するか、大人に相談する</label><label><input type="radio" name="q0" value="C"> C. 秘密の話をしてみる</label><label><input type="radio" name="q0" value="D"> D. 電話番号を教える</label></div><hr>
+<div class="question">2. パスワードを作るときに、一番安全なのは？</div><div class="options"><label><input type="radio" name="q1" value="A"> A. 誕生日だけにする</label><label><input type="radio" name="q1" value="B"> B. 「123456」にする</label><label><input type="radio" name="q1" value="C"> C. 覚えやすいけど他の人が知らない言葉を使う</label><label><input type="radio" name="q1" value="D"> D. 自分の名前だけにする</label></div><hr>
+<div class="question">3. SNSに写真をアップするときに気をつけることは？</div><div class="options"><label><input type="radio" name="q2" value="A"> A. 写っている人にOKをもらう</label><label><input type="radio" name="q2" value="B"> B. どんどんアップする</label><label><input type="radio" name="q2" value="C"> C. 自分の家の場所がわかるようにする</label><label><input type="radio" name="q2" value="D"> D. 何も気にしない</label></div><hr>
+<div class="question">4. だれかがあなたのアカウントを使っていたら、まずどうする？</div><div class="options"><label><input type="radio" name="q3" value="A"> A. パスワードを変えて、大人に相談する</label><label><input type="radio" name="q3" value="B"> B. ほうっておく</label><label><input type="radio" name="q3" value="C"> C. その人に文句を言う</label><label><input type="radio" name="q3" value="D"> D. 使われているのを楽しむ</label></div><hr>
+<div class="question">5. ネットで見つけた「無料プレゼント」の広告、どう思う？</div><div class="options"><label><input type="radio" name="q4" value="A"> A. とりあえずクリックする</label><label><input type="radio" name="q4" value="B"> B. 本物かどうか調べる</label><label><input type="radio" name="q4" value="C"> C. 絶対に信じる</label><label><input type="radio" name="q4" value="D"> D. 名前や住所をすぐ入力する</label></div><hr>
+<div class="question">6. 知らない人に自分の学校を教えてもいい？</div><div class="options"><label><input type="radio" name="q5" value="A"> A. はい</label><label><input type="radio" name="q5" value="B"> B. いいえ</label><label><input type="radio" name="q5" value="C"> C. ちょっとだけならOK</label><label><input type="radio" name="q5" value="D"> D. 相手がやさしそうならOK</label></div><hr>
+<div class="question">7. パスワードはどれくらいのひんどで変えるのがいい？</div><div class="options"><label><input type="radio" name="q6" value="A"> A. 一生そのままでOK</label><label><input type="radio" name="q6" value="B"> B. 時々変えるのが理想</label><label><input type="radio" name="q6" value="C"> C. 10年に1回だけ</label><label><input type="radio" name="q6" value="D"> D. 友だちに聞いて決める</label></div><hr>
+<div class="question">8. 「https」で始まるウェブサイトは？</div><div class="options"><label><input type="radio" name="q7" value="A"> A. 安全性が高い</label><label><input type="radio" name="q7" value="B"> B. 危ないサイト</label><label><input type="radio" name="q7" value="C"> C. 必ずウイルスがある</label><label><input type="radio" name="q7" value="D"> D. インターネットが使えない</label></div><hr>
+<div class="question">9. パスワードを友だちに教えてもいい？</div><div class="options"><label><input type="radio" name="q8" value="A"> A. はい、仲良しならOK</label><label><input type="radio" name="q8" value="B"> B. いいえ、教えない</label><label><input type="radio" name="q8" value="C"> C. 1回だけならOK</label><label><input type="radio" name="q8" value="D"> D. 教えたあとに変えればOK</label></div><hr>
+<div class="question">10. ネットでいじめを見たときは？</div><div class="options"><label><input type="radio" name="q9" value="A"> A. いっしょにいじめる</label><label><input type="radio" name="q9" value="B"> B. 無視する</label><label><input type="radio" name="q9" value="C"> C. スクリーンショットをとって、大人に相談する</label><label><input type="radio" name="q9" value="D"> D. 自分のことじゃないから関係ない</label></div><hr>
+<div class="question">11. 見たことのないアプリをインストールするときは？</div><div class="options"><label><input type="radio" name="q10" value="A"> A. すぐにインストールする</label><label><input type="radio" name="q10" value="B"> B. 友だちに聞いてから</label><label><input type="radio" name="q10" value="C"> C. 説明を読んでから大人と相談する</label><label><input type="radio" name="q10" value="D"> D. 面白そうならOK</label></div><hr>
+<div class="question">12. ネットで使うニックネームで一番安全なのは？</div><div class="options"><label><input type="radio" name="q11" value="A"> A. 本名に近い名前</label><label><input type="radio" name="q11" value="B"> B. 生まれた年を入れる</label><label><input type="radio" name="q11" value="C"> C. まったく関係ないニックネーム</label><label><input type="radio" name="q11" value="D"> D. 住んでる町の名前を入れる</label></div><hr>
+<div class="question">13. スマホのロック画面に書いてはいけないものは？</div><div class="options"><label><input type="radio" name="q12" value="A"> A. 好きなキャラの名前</label><label><input type="radio" name="q12" value="B"> B. パスワード</label><label><input type="radio" name="q12" value="C"> C. 好きな動物</label><label><input type="radio" name="q12" value="D"> D. 好きな色</label></div><hr>
+<div class="question">14. フリーWi-Fiを使うときに気をつけることは？</div><div class="options"><label><input type="radio" name="q13" value="A"> A. 何でもしてOK</label><label><input type="radio" name="q13" value="B"> B. 個人情報を入力しない</label><label><input type="radio" name="q13" value="C"> C. すべて無料で安全</label><label><input type="radio" name="q13" value="D"> D. パスワードを公開する</label></div><hr>
+<div class="question">15. ネットで知り合った人に会いたいときは？</div><div class="options"><label><input type="radio" name="q14" value="A"> A. 1人でこっそり会う</label><label><input type="radio" name="q14" value="B"> B. 絶対に会わない（大人に相談する）</label><label><input type="radio" name="q14" value="C"> C. 2人以上でこっそり会う</label><label><input type="radio" name="q14" value="D"> D. 夜に会うようにする</label></div><hr>
+<div class="question">16. こまめにするべきセキュリティの行動は？</div><div class="options"><label><input type="radio" name="q15" value="A"> A. スクリーンショットを消す</label><label><input type="radio" name="q15" value="B"> B. デバイスをきれいにふく</label><label><input type="radio" name="q15" value="C"> C. ソフトのアップデートをする</label><label><input type="radio" name="q15" value="D"> D. 写真をたくさんとる</label></div><hr>
+<div class="question">17. 「なりすまし」はどんなこと？</div><div class="options"><label><input type="radio" name="q16" value="A"> A. 好きな人のマネをする</label><label><input type="radio" name="q16" value="B"> B. 他人のふりをしてネットで行動する</label><label><input type="radio" name="q16" value="C"> C. ものまねショーに出る</label><label><input type="radio" name="q16" value="D"> D. キャラになりきる遊び</label></div><hr>
+<div class="question">18. ゲームのチャットで気をつけることは？</div><div class="options"><label><input type="radio" name="q17" value="A"> A. 年齢や名前を言う</label><label><input type="radio" name="q17" value="B"> B. たくさん話す</label><label><input type="radio" name="q17" value="C"> C. 個人情報を言わない</label><label><input type="radio" name="q17" value="D"> D. どんどん友だち申請する</label></div><hr>
+<div class="question">19. SNSで友だちだけに見せたい投稿は？</div><div class="options"><label><input type="radio" name="q18" value="A"> A. 「公開」設定にする</label><label><input type="radio" name="q18" value="B"> B. SNSは利用しない。仕方がないときは「非公開」にする（</label><label><input type="radio" name="q18" value="C"> C. ぜんぶ公開する</label><label><input type="radio" name="q18" value="D"> D. 公開範囲は気にしない</label></div><hr>
+<div class="question">20. ふだんから気をつけるべきことは？</div><div class="options"><label><input type="radio" name="q19" value="A"> A. 情報を信じすぎない</label><label><input type="radio" name="q19" value="B"> B. 何でも公開する</label><label><input type="radio" name="q19" value="C"> C. 自分のことをみんなに話す</label><label><input type="radio" name="q19" value="D"> D. メールのリンクを全部クリックする</label></div><hr>
+
+            <button type="button" onclick="checkAnswers()">採点する</button>
+        </form>
+        <div class="result" id="result"></div>
+    </div>
+    <script>
+        function checkAnswers() {
+            const answers = ['B', 'C', 'A', 'A', 'B', 'B', 'B', 'A', 'B', 'C', 'C', 'C', 'B', 'B', 'B', 'C', 'B', 'C', 'B', 'A'];
+            let score = 0;
+            for (let i = 0; i < answers.length; i++) {
+                const radios = document.getElementsByName('q' + i);
+                for (let j = 0; j < radios.length; j++) {
+                    if (radios[j].checked) {
+                        if (radios[j].value === answers[i]) {
+                            score++;
+                        }
+                    }
+                }
+            }
+            if (score === answers.length) {
+            document.getElementById('result').innerText = `おめでとう！あなたのスコアは ${score} / ${answers.length} 点です。\n暗号は『ST25』です。`;
+                document.getElementById('secretCode').innerText = "暗号は『ST25』です。";
+            } else {
+            document.getElementById('result').innerText = `あなたのスコアは ${score} / ${answers.length} 点です。全問正解すると暗号が出ます。`;
+                document.getElementById('secretCode').innerText = "";
+            }
+        }
+    </script>
+</body>
+</html>
