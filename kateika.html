@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>家庭科テスト予想問題50問</title>
+
+<style>
+body{
+    font-family:sans-serif;
+    margin:0;
+    padding:20px;
+    background:#f5f5f5;
+}
+
+.card{
+    background:white;
+    border-radius:12px;
+    padding:20px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.1);
+}
+
+h1{
+    font-size:22px;
+    text-align:center;
+}
+
+#number{
+    color:#666;
+    margin-bottom:15px;
+}
+
+#question{
+    font-size:22px;
+    font-weight:bold;
+    line-height:1.5;
+    margin-bottom:20px;
+}
+
+#answer{
+    display:none;
+    background:#e8f5e9;
+    padding:15px;
+    border-radius:8px;
+    margin-top:15px;
+    font-size:20px;
+}
+
+button{
+    width:100%;
+    padding:15px;
+    font-size:18px;
+    margin-top:10px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.show{
+    background:#2196F3;
+    color:white;
+}
+
+.next{
+    background:#4CAF50;
+    color:white;
+}
+
+.shuffle{
+    background:#FF9800;
+    color:white;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h1>家庭科テスト予想問題</h1>
+
+<div id="number"></div>
+
+<div id="question"></div>
+
+<button class="show" onclick="showAnswer()">
+答えを見る
+</button>
+
+<div id="answer"></div>
+
+<button class="next" onclick="nextQuestion()">
+次の問題
+</button>
+
+
+
+</div>
+
+<script>
+
+let questions = [
+
+{q:"家庭とは何ですか？",a:"家族が協力して生活する場。"},
+{q:"家族とは何ですか？",a:"血縁や婚姻などで結ばれた人々の集まり。"},
+{q:"地域とは何ですか？",a:"人々が生活している一定の範囲の社会。"},
+{q:"自己理解とは何ですか？",a:"自分の特徴や考え方を理解すること。"},
+{q:"自分の長所を知ることが大切な理由は？",a:"自分らしく生活し成長するため。"},
+{q:"家庭の機能を1つ答えなさい。",a:"衣食住の確保、子どもの養育、心の安定など。"},
+{q:"家庭の機能として子どもを育てることを何という？",a:"養育。"},
+{q:"家庭の機能として生活に必要なものを得ることを何という？",a:"経済的機能。"},
+{q:"家庭の機能として心の支えになることを何という？",a:"精神的機能。"},
+{q:"家庭を支える経済とは何ですか？",a:"収入と支出を管理し生活を成り立たせること。"},
+{q:"収入とは何ですか？",a:"家庭に入るお金。"},
+{q:"支出とは何ですか？",a:"家庭から出ていくお金。"},
+{q:"家族の役割分担が必要な理由は？",a:"協力して生活するため。"},
+{q:"多様な家族とは何ですか？",a:"家族の形や生活の仕方がさまざまであること。"},
+{q:"核家族とは何ですか？",a:"親と子どもで構成される家族。"},
+{q:"幼児とは何歳頃までの子どもですか？",a:"おおむね1歳から小学校入学前。"},
+{q:"幼児期の特徴を1つ答えなさい。",a:"心身が大きく成長する時期。"},
+{q:"幼児と接するときに大切なことは？",a:"安全に配慮し相手の気持ちを尊重すること。"},
+{q:"大人の役割を1つ答えなさい。",a:"子どもの成長を支えること。"},
+{q:"地域の人々と関わることの良さは？",a:"支え合いながら生活できること。"},
+{q:"消費生活とは何ですか？",a:"商品やサービスを購入して利用する生活。"},
+{q:"消費者とは何ですか？",a:"商品やサービスを利用する人。"},
+{q:"生産者とは何ですか？",a:"商品やサービスを作る人や企業。"},
+{q:"販売者とは何ですか？",a:"商品やサービスを売る人や企業。"},
+{q:"消費生活の流れを説明しなさい。",a:"生産→流通→販売→消費。"},
+{q:"契約とは何ですか？",a:"当事者同士の約束。"},
+{q:"売買契約とは何ですか？",a:"商品と代金を交換する約束。"},
+{q:"商品をレジに持って行くと契約は成立する？",a:"通常は店側が承諾した時に成立する。"},
+{q:"商品の表示を確認する理由は？",a:"安全で適切に使用するため。"},
+{q:"食品表示で確認することを1つ答えなさい。",a:"原材料、消費期限、賞味期限など。"},
+{q:"賞味期限とは何ですか？",a:"おいしく食べられる期限。"},
+{q:"消費期限とは何ですか？",a:"安全に食べられる期限。"},
+{q:"JISマークとは何ですか？",a:"日本産業規格に適合した製品のマーク。"},
+{q:"SGマークとは何ですか？",a:"安全性が認められた製品のマーク。"},
+{q:"エコマークとは何ですか？",a:"環境への負荷が少ない商品のマーク。"},
+{q:"店舗販売とは何ですか？",a:"店で商品を直接販売する方法。"},
+{q:"通信販売とは何ですか？",a:"インターネットやカタログで購入する方法。"},
+{q:"無人販売の特徴を答えなさい。",a:"店員がいなくても購入できる。"},
+{q:"現金払いの特徴は？",a:"その場でお金を支払う。"},
+{q:"クレジットカード払いの特徴は？",a:"後で代金を支払う。"},
+{q:"電子マネーの特徴は？",a:"あらかじめ入金して利用する。"},
+{q:"QRコード決済の特徴は？",a:"スマートフォンで支払う。"},
+{q:"キャッシュレス決済とは何ですか？",a:"現金を使わずに支払う方法。"},
+{q:"キャッシュレス決済のメリットは？",a:"支払いが早い、現金を持ち歩かなくてよい。"},
+{q:"キャッシュレス決済の注意点は？",a:"使いすぎに気を付けること。"},
+{q:"消費者の責任とは何ですか？",a:"正しい情報をもとに商品を選ぶこと。"},
+{q:"環境に配慮した消費を何という？",a:"エシカル消費。"},
+{q:"3Rとは何ですか？",a:"リデュース、リユース、リサイクル。"},
+{q:"リデュースとは何ですか？",a:"ごみを減らすこと。"},
+{q:"リユースとは何ですか？",a:"繰り返し使うこと。"},
+{q:"リサイクルとは何ですか？",a:"資源として再利用すること。"}
+
+];
+
+
+let index = 0;
+
+function displayQuestion(){
+    document.getElementById("number").innerHTML =
+        (index+1)+" / "+questions.length;
+
+    document.getElementById("question").innerHTML =
+        questions[index].q;
+
+    document.getElementById("answer").style.display="none";
+
+    document.getElementById("answer").innerHTML =
+        "<b>答え：</b>"+questions[index].a;
+}
+
+function showAnswer(){
+    document.getElementById("answer").style.display="block";
+}
+
+function nextQuestion(){
+    index++;
+    if(index>=questions.length){
+        index=0;
+    }
+    displayQuestion();
+}
+
+function shuffleQuestions(){
+    questions.sort(()=>Math.random()-0.5);
+    index=0;
+    displayQuestion();
+}
+
+displayQuestion();
+
+</script>
+
+</body>
+</html>

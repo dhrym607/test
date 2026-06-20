@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>音楽テスト予想問題50問</title>
+
+<style>
+body{
+    font-family:sans-serif;
+    margin:0;
+    padding:20px;
+    background:#f5f5f5;
+}
+
+.card{
+    background:white;
+    border-radius:12px;
+    padding:20px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.1);
+}
+
+h1{
+    font-size:22px;
+    text-align:center;
+}
+
+#number{
+    color:#666;
+    margin-bottom:15px;
+}
+
+#question{
+    font-size:22px;
+    font-weight:bold;
+    line-height:1.5;
+    margin-bottom:20px;
+}
+
+#answer{
+    display:none;
+    background:#e8f5e9;
+    padding:15px;
+    border-radius:8px;
+    margin-top:15px;
+    font-size:20px;
+}
+
+button{
+    width:100%;
+    padding:15px;
+    font-size:18px;
+    margin-top:10px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.show{
+    background:#2196F3;
+    color:white;
+}
+
+.next{
+    background:#4CAF50;
+    color:white;
+}
+
+.shuffle{
+    background:#FF9800;
+    color:white;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h1>音楽テスト予想問題</h1>
+
+<div id="number"></div>
+
+<div id="question"></div>
+
+<button class="show" onclick="showAnswer()">
+答えを見る
+</button>
+
+<div id="answer"></div>
+
+<button class="next" onclick="nextQuestion()">
+次の問題
+</button>
+
+
+
+</div>
+
+<script>
+
+let questions = [
+
+{q:"全音符は何拍の長さ？",a:"4拍。"},
+{q:"2分音符は何拍の長さ？",a:"2拍。"},
+{q:"4分音符は何拍の長さ？",a:"1拍。"},
+{q:"8分音符は何拍の長さ？",a:"半拍（1/2拍）。"},
+{q:"16分音符は何拍の長さ？",a:"1/4拍。"},
+{q:"全休符は何拍休む？",a:"4拍休む。"},
+{q:"2分休符は何拍休む？",a:"2拍休む。"},
+{q:"4分休符は何拍休む？",a:"1拍休む。"},
+{q:"8分休符は何拍休む？",a:"半拍休む。"},
+{q:"付点4分音符は何拍の長さ？",a:"1.5拍。"},
+{q:"付点2分音符は何拍の長さ？",a:"3拍。"},
+{q:"付点とは何か？",a:"元の音符の長さの半分を加える記号。"},
+{q:"拍とは何か？",a:"音楽の一定のリズムの単位。"},
+{q:"拍子とは何か？",a:"1小節の中に何拍あるかを表したもの。"},
+{q:"4分の4拍子とは？",a:"4分音符を1拍として1小節に4拍ある。"},
+{q:"4分の3拍子とは？",a:"4分音符を1拍として1小節に3拍ある。"},
+{q:"4分の2拍子とは？",a:"4分音符を1拍として1小節に2拍ある。"},
+{q:"8分の6拍子とは？",a:"8分音符を単位として1小節に6つある拍子。"},
+{q:"単純拍子とは？",a:"1拍が2等分できる拍子。"},
+{q:"複合拍子とは？",a:"1拍が3等分できる拍子。"},
+{q:"4分の4拍子は単純拍子と複合拍子のどちら？",a:"単純拍子。"},
+{q:"8分の6拍子は単純拍子と複合拍子のどちら？",a:"複合拍子。"},
+{q:"クレッシェンド(crescendo)とは？",a:"だんだん強く。"},
+{q:"デクレッシェンド(decrescendo)とは？",a:"だんだん弱く。"},
+{q:"フォルテ(f)とは？",a:"強く。"},
+{q:"フォルティッシモ(ff)とは？",a:"非常に強く。"},
+{q:"メゾフォルテ(mf)とは？",a:"やや強く。"},
+{q:"ピアノ(p)とは？",a:"弱く。"},
+{q:"ピアニッシモ(pp)とは？",a:"非常に弱く。"},
+{q:"メゾピアノ(mp)とは？",a:"やや弱く。"},
+{q:"速度とは何か？",a:"演奏する速さ。"},
+{q:"アンダンテ(andante)とは？",a:"歩くような速さで。"},
+{q:"モデラート(moderato)とは？",a:"中くらいの速さで。"},
+{q:"アレグロ(allegro)とは？",a:"速く。"},
+{q:"プレスト(presto)とは？",a:"急速に。"},
+{q:"ラルゴ(largo)とは？",a:"幅広くゆるやかに。"},
+{q:"リタルダンド(rit.)とは？",a:"だんだん遅く。"},
+{q:"アッチェレランド(accel.)とは？",a:"だんだん速く。"},
+{q:"反復記号とは何か？",a:"同じ部分を繰り返して演奏する記号。"},
+{q:"||: :|| の意味は？",a:"囲まれた部分を繰り返す。"},
+{q:"D.C.とは何の略？",a:"Da Capo。曲の最初に戻る。"},
+{q:"D.S.とは何の略？",a:"Dal Segno。セーニョ記号に戻る。"},
+{q:"Fineとは？",a:"終わり。"},
+{q:"Codaとは？",a:"終結部。"},
+{q:"スタッカートとは？",a:"音を短く切って演奏する。"},
+{q:"レガートとは？",a:"音をなめらかにつなげて演奏する。"},
+{q:"テヌートとは？",a:"音を十分に保って演奏する。"},
+{q:"アクセントとは？",a:"その音を強調して演奏する。"}
+
+];
+
+let index = 0;
+
+function displayQuestion(){
+    document.getElementById("number").innerHTML =
+        (index+1)+" / "+questions.length;
+
+    document.getElementById("question").innerHTML =
+        questions[index].q;
+
+    document.getElementById("answer").style.display="none";
+
+    document.getElementById("answer").innerHTML =
+        "<b>答え：</b>"+questions[index].a;
+}
+
+function showAnswer(){
+    document.getElementById("answer").style.display="block";
+}
+
+function nextQuestion(){
+    index++;
+    if(index>=questions.length){
+        index=0;
+    }
+    displayQuestion();
+}
+
+function shuffleQuestions(){
+    questions.sort(()=>Math.random()-0.5);
+    index=0;
+    displayQuestion();
+}
+
+displayQuestion();
+
+</script>
+
+</body>
+</html>
