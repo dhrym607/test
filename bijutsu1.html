@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>美術テスト予想問題</title>
+
+<style>
+body{
+    font-family:sans-serif;
+    margin:0;
+    padding:20px;
+    background:#f5f5f5;
+}
+
+.card{
+    background:white;
+    border-radius:12px;
+    padding:20px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.1);
+}
+
+h1{
+    font-size:22px;
+    text-align:center;
+}
+
+#number{
+    color:#666;
+    margin-bottom:15px;
+}
+
+#question{
+    font-size:22px;
+    font-weight:bold;
+    line-height:1.5;
+    margin-bottom:20px;
+}
+
+#answer{
+    display:none;
+    background:#e8f5e9;
+    padding:15px;
+    border-radius:8px;
+    margin-top:15px;
+    font-size:20px;
+}
+
+button{
+    width:100%;
+    padding:15px;
+    font-size:18px;
+    margin-top:10px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.show{
+    background:#2196F3;
+    color:white;
+}
+
+.next{
+    background:#4CAF50;
+    color:white;
+}
+
+.shuffle{
+    background:#FF9800;
+    color:white;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h1>美術テスト予想問題</h1>
+
+<div id="number"></div>
+
+<div id="question"></div>
+
+<button class="show" onclick="showAnswer()">
+答えを見る
+</button>
+
+<div id="answer"></div>
+
+<button class="next" onclick="nextQuestion()">
+次の問題
+</button>
+
+
+
+</div>
+
+<script>
+
+
+let questions = [
+
+{q:"『太陽の塔』の作者は誰ですか？",a:"岡本太郎。"},
+{q:"『太陽の塔』が制作されたきっかけとなった博覧会は？",a:"1970年大阪万博（日本万国博覧会）。"},
+{q:"『太陽の塔』の主な素材は？",a:"鉄筋コンクリート。"},
+{q:"『太陽の塔』はどこにありますか？",a:"大阪府吹田市の万博記念公園。"},
+{q:"『明日の神話』の作者は誰ですか？",a:"岡本太郎。"},
+{q:"『明日の神話』はどこの駅に展示されていますか？",a:"東京・渋谷駅。"},
+{q:"『明日の神話』の題材となった出来事は？",a:"原爆被害。"},
+{q:"岡本太郎が表現しようとしたテーマは？",a:"生命力や人間の力強さ。"},
+{q:"『松林図屏風』の作者は誰ですか？",a:"長谷川等伯。"},
+{q:"『松林図屏風』が描かれた時代は？",a:"安土桃山時代。"},
+{q:"『松林図屏風』はどこに所蔵されていますか？",a:"東京国立博物館。"},
+{q:"『松林図屏風』の特徴は？",a:"墨の濃淡で松林を表現している。"},
+{q:"『松林図屏風』は国宝ですか？",a:"国宝である。"},
+{q:"水墨画とは何ですか？",a:"墨の濃淡だけで表現する絵画。"},
+{q:"水墨画で大切な表現方法は？",a:"濃淡やにじみ、ぼかし、かすれ。"},
+{q:"濃墨とは何ですか？",a:"最も濃い墨。"},
+{q:"中墨とは何ですか？",a:"中間の濃さの墨。"},
+{q:"淡墨とは何ですか？",a:"薄い墨。"},
+{q:"墨の濃淡を変えるには何を使いますか？",a:"水の量を調節する。"},
+{q:"にじみとは何ですか？",a:"水を含んだ紙に墨が広がる表現。"},
+{q:"ぼかしとは何ですか？",a:"墨を水で薄めてなめらかに変化させる表現。"},
+{q:"かすれとは何ですか？",a:"墨を少なくして擦れたように表現する技法。"},
+{q:"積墨法とは何ですか？",a:"薄い墨から順に重ねて描く技法。"},
+{q:"積墨法で重ねる順番は？",a:"淡墨→中墨→濃墨。"},
+{q:"破墨法とは何ですか？",a:"乾かないうちに墨を重ねる技法。"},
+{q:"没骨法とは何ですか？",a:"輪郭線を描かずに墨の濃淡だけで描く技法。"},
+{q:"直筆とはどのような筆使いですか？",a:"筆を立てて描く方法。"},
+{q:"直筆で描く線の特徴は？",a:"細く力強い線。"},
+{q:"側筆とはどのような筆使いですか？",a:"筆を傾けて描く方法。"},
+{q:"側筆で描く線の特徴は？",a:"太く幅のある線。"},
+{q:"転筆とはどのような筆使いですか？",a:"筆を回転させながら描く方法。"},
+{q:"転筆で描く線の特徴は？",a:"曲線や変化のある線。"},
+{q:"日本の伝統的な絵画は何に描かれましたか？",a:"屏風や掛け軸、襖など。"},
+{q:"屏風の役割は？",a:"空間を仕切ったり飾ったりすること。"},
+{q:"掛け軸の役割は？",a:"床の間などに飾ること。"},
+{q:"襖絵とは何ですか？",a:"襖に描かれた絵。"},
+{q:"日本美術では何と調和することが大切ですか？",a:"空間や建築との調和。"},
+{q:"絵巻物とは何ですか？",a:"横長の紙を巻物状にした絵画作品。"},
+{q:"絵巻物の見方は？",a:"右から左へ少しずつ広げて見る。"},
+{q:"絵巻物の特徴は？",a:"時間の流れを表現できる。"},
+{q:"日本の伝統絵画で重視されるものは？",a:"余白の美。"},
+{q:"余白にはどんな効果がありますか？",a:"広がりや静けさを感じさせる。"},
+{q:"水墨画で色は主に使いますか？",a:"ほとんど使わず墨で表現する。"},
+{q:"水墨画が中国から伝わったのはいつ頃ですか？",a:"鎌倉時代頃。"},
+{q:"墨の濃淡で何を表現できますか？",a:"光や空気感、遠近感。"},
+{q:"『松林図屏風』で表現されている空気感は何によるものですか？",a:"墨の濃淡と余白。"},
+{q:"岡本太郎の作品の特徴は？",a:"力強く独創的な表現。"},
+{q:"『太陽の塔』の顔は何を象徴しているとされますか？",a:"過去・現在・未来。"},
+{q:"日本美術における『美意識』とは何ですか？",a:"日本人独自の美の感じ方や考え方。"},
+{q:"この単元で最も重要なことは？",a:"作品の特徴と表現技法を結び付けて理解すること。"}
+
+];
+
+
+let index = 0;
+
+function displayQuestion(){
+    document.getElementById("number").innerHTML =
+        (index+1)+" / "+questions.length;
+
+    document.getElementById("question").innerHTML =
+        questions[index].q;
+
+    document.getElementById("answer").style.display="none";
+
+    document.getElementById("answer").innerHTML =
+        "<b>答え：</b>"+questions[index].a;
+}
+
+function showAnswer(){
+    document.getElementById("answer").style.display="block";
+}
+
+function nextQuestion(){
+    index++;
+    if(index>=questions.length){
+        index=0;
+    }
+    displayQuestion();
+}
+
+function shuffleQuestions(){
+    questions.sort(()=>Math.random()-0.5);
+    index=0;
+    displayQuestion();
+}
+
+displayQuestion();
+
+</script>
+
+</body>
+</html>
