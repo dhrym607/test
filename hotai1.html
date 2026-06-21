@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>保健体育テスト予想問題</title>
+
+<style>
+body{
+    font-family:sans-serif;
+    margin:0;
+    padding:20px;
+    background:#f5f5f5;
+}
+
+.card{
+    background:white;
+    border-radius:12px;
+    padding:20px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.1);
+}
+
+h1{
+    font-size:22px;
+    text-align:center;
+}
+
+#number{
+    color:#666;
+    margin-bottom:15px;
+}
+
+#question{
+    font-size:22px;
+    font-weight:bold;
+    line-height:1.5;
+    margin-bottom:20px;
+}
+
+#answer{
+    display:none;
+    background:#e8f5e9;
+    padding:15px;
+    border-radius:8px;
+    margin-top:15px;
+    font-size:20px;
+}
+
+button{
+    width:100%;
+    padding:15px;
+    font-size:18px;
+    margin-top:10px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.show{
+    background:#2196F3;
+    color:white;
+}
+
+.next{
+    background:#4CAF50;
+    color:white;
+}
+
+.shuffle{
+    background:#FF9800;
+    color:white;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h1>保健体育テスト予想問題</h1>
+
+<div id="number"></div>
+
+<div id="question"></div>
+
+<button class="show" onclick="showAnswer()">
+答えを見る
+</button>
+
+<div id="answer"></div>
+
+<button class="next" onclick="nextQuestion()">
+次の問題
+</button>
+
+
+
+</div>
+
+<script>
+
+let questions = [
+
+{q:"クロールで最も大切な基本姿勢を何といいますか？",a:"ストリームライン。"},
+{q:"ストリームラインとはどのような姿勢ですか？",a:"体を一直線にして水の抵抗を減らす姿勢。"},
+{q:"ストリームラインのポイント①は？",a:"背中の面を一直線にする。"},
+{q:"ストリームラインのポイント②は？",a:"手を頭の後ろで組み前へ伸ばす。"},
+{q:"ストリームラインのポイント③は？",a:"あごを引いて視線を真下へ向ける。"},
+{q:"ストリームラインのポイント④は？",a:"胸を張らず背骨を反らさない。"},
+{q:"クロールのキックで足首はどうしますか？",a:"力を抜く。"},
+{q:"クロールのキックはどこから動かしますか？",a:"股関節。"},
+{q:"クロールのキックで膝はどう使いますか？",a:"少し曲げるが大きく曲げない。"},
+{q:"クロールのストロークで最初の動作は？",a:"エントリー。"},
+{q:"エントリーとは何ですか？",a:"手を親指側から入水すること。"},
+{q:"キャッチとは何ですか？",a:"手で水を捉える動作。"},
+{q:"プルとは何ですか？",a:"水をかく動作。"},
+{q:"プッシュとは何ですか？",a:"水を後ろへ押し出す動作。"},
+{q:"リカバリーとは何ですか？",a:"腕を空中で前へ戻す動作。"},
+{q:"クロールのストロークの順番を答えなさい。",a:"エントリー→キャッチ→プル→プッシュ→リカバリー。"},
+{q:"クロールで呼吸をしやすくするために大切なことは？",a:"リズムよくストロークすること。"},
+{q:"平泳ぎのキックで足首はどうしますか？",a:"90度に曲げる。"},
+{q:"平泳ぎで足を開く向きは？",a:"外側。"},
+{q:"平泳ぎのキックで最後はどうしますか？",a:"足を伸ばして閉じる。"},
+{q:"平泳ぎの推進力の中心はどこですか？",a:"キック。"},
+{q:"非常時に着衣泳を学ぶ目的は？",a:"水難事故で命を守るため。"},
+{q:"着衣泳ではなぜ服を脱がない方がよいのですか？",a:"体力の消耗を防ぐため。"},
+{q:"着衣泳ではどのように浮くのがよいですか？",a:"仰向けで浮く。"},
+{q:"海や川で泳ぐ場合に注意することは？",a:"流れや波があるため無理をしない。"},
+{q:"病原体とは何ですか？",a:"病気を引き起こす原因となるもの。"},
+{q:"病原体の例を2つ答えなさい。",a:"ウイルス、細菌。"},
+{q:"感染とは何ですか？",a:"病原体が体内に侵入すること。"},
+{q:"発病とは何ですか？",a:"病気の症状が現れること。"},
+{q:"潜伏期間とは何ですか？",a:"感染してから発病するまでの期間。"},
+{q:"主な感染経路を4つ答えなさい。",a:"空気感染・飛沫感染・接触感染・経口感染。"},
+{q:"空気感染する病気の例を答えなさい。",a:"結核。"},
+{q:"飛沫感染する病気の例を答えなさい。",a:"インフルエンザ、風邪。"},
+{q:"接触感染する病気の例を答えなさい。",a:"水虫。"},
+{q:"経口感染する病気の例を答えなさい。",a:"ノロウイルス。"},
+{q:"感染症が広がりやすくなる条件は？",a:"人口が密集していること。"},
+{q:"免疫とは何ですか？",a:"病原体から体を守る仕組み。"},
+{q:"抵抗力とは何ですか？",a:"病気を防ぐ力。"},
+{q:"免疫ができるとどうなりますか？",a:"同じ病気にかかりにくくなる。"},
+{q:"予防接種とは何ですか？",a:"病原体の情報を覚えさせて免疫を作る方法。"},
+{q:"予防接種の目的は？",a:"感染症の予防。"},
+{q:"抵抗力を高めるために大切なことを3つ答えなさい。",a:"バランスの良い食事、適切な休養・睡眠、適切な運動。"},
+{q:"性感染症とは何ですか？",a:"性的接触によって感染する病気。"},
+{q:"性感染症はどのように感染しますか？",a:"性的接触。"},
+{q:"性感染症では症状が出ないことがありますか？",a:"ある。"},
+{q:"性感染症の特徴として感染者の多い年代は？",a:"20～30代。"},
+{q:"エイズの正式名称は？",a:"後天性免疫不全症候群。"},
+{q:"エイズの原因となるウイルスは？",a:"HIV（ヒト免疫不全ウイルス）。"},
+{q:"HIVに感染すると何が弱くなりますか？",a:"免疫機能。"},
+{q:"HIVはどのような体液で感染しますか？",a:"血液、精液など。"},
+{q:"HIVは日常生活で感染しますか？",a:"ほとんど感染しない。"},
+{q:"HIV感染から検査で分かるまでどれくらいかかりますか？",a:"約3か月。"},
+{q:"保健所でHIV検査は受けられますか？",a:"受けられる。"},
+{q:"HIV検査は匿名で受けられますか？",a:"受けられる。"},
+{q:"性感染症予防の方法を答えなさい。",a:"性的接触を避ける、コンドームを使用する。"},
+{q:"コンドームにはどのような効果がありますか？",a:"性感染症や望まない妊娠の予防。"},
+{q:"感染症予防で最も基本的なことは？",a:"手洗いと衛生管理。"},
+{q:"感染症が流行しているときに大切なことは？",a:"感染経路を断つこと。"}
+
+];
+
+let index = 0;
+
+function displayQuestion(){
+    document.getElementById("number").innerHTML =
+        (index+1)+" / "+questions.length;
+
+    document.getElementById("question").innerHTML =
+        questions[index].q;
+
+    document.getElementById("answer").style.display="none";
+
+    document.getElementById("answer").innerHTML =
+        "<b>答え：</b>"+questions[index].a;
+}
+
+function showAnswer(){
+    document.getElementById("answer").style.display="block";
+}
+
+function nextQuestion(){
+    index++;
+    if(index>=questions.length){
+        index=0;
+    }
+    displayQuestion();
+}
+
+function shuffleQuestions(){
+    questions.sort(()=>Math.random()-0.5);
+    index=0;
+    displayQuestion();
+}
+
+displayQuestion();
+
+</script>
+
+</body>
+</html>

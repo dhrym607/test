@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>音楽テスト予想問題</title>
+
+<style>
+body{
+    font-family:sans-serif;
+    margin:0;
+    padding:20px;
+    background:#f5f5f5;
+}
+
+.card{
+    background:white;
+    border-radius:12px;
+    padding:20px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.1);
+}
+
+h1{
+    font-size:22px;
+    text-align:center;
+}
+
+#number{
+    color:#666;
+    margin-bottom:15px;
+}
+
+#question{
+    font-size:22px;
+    font-weight:bold;
+    line-height:1.5;
+    margin-bottom:20px;
+}
+
+#answer{
+    display:none;
+    background:#e8f5e9;
+    padding:15px;
+    border-radius:8px;
+    margin-top:15px;
+    font-size:20px;
+}
+
+button{
+    width:100%;
+    padding:15px;
+    font-size:18px;
+    margin-top:10px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.show{
+    background:#2196F3;
+    color:white;
+}
+
+.next{
+    background:#4CAF50;
+    color:white;
+}
+
+.shuffle{
+    background:#FF9800;
+    color:white;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h1>音楽テスト予想問題</h1>
+
+<div id="number"></div>
+
+<div id="question"></div>
+
+<button class="show" onclick="showAnswer()">
+答えを見る
+</button>
+
+<div id="answer"></div>
+
+<button class="next" onclick="nextQuestion()">
+次の問題
+</button>
+
+
+
+</div>
+
+<script>
+
+
+let questions = [
+
+{q:"『花』の作詞者は誰ですか？",a:"武島羽衣。"},
+{q:"武島羽衣は何県出身ですか？",a:"東京都。"},
+{q:"武島羽衣はどの大学を卒業しましたか？",a:"東京帝国大学。"},
+{q:"武島羽衣は何として活躍しましたか？",a:"教授、歌人。"},
+{q:"『花』の作曲者は誰ですか？",a:"滝廉太郎。"},
+{q:"滝廉太郎の出身地はどこですか？",a:"東京。"},
+{q:"滝廉太郎は主にどこで育ちましたか？",a:"大分県。"},
+{q:"滝廉太郎が卒業した学校は？",a:"東京音楽学校。"},
+{q:"滝廉太郎が留学した国は？",a:"ドイツ。"},
+{q:"滝廉太郎は日本で最初に何を取り入れた作曲家ですか？",a:"西洋音楽の様式。"},
+{q:"滝廉太郎の代表作を2つ答えなさい。",a:"花、荒城の月。"},
+{q:"『ブルタバ』の作曲者は誰ですか？",a:"スメタナ。"},
+{q:"スメタナはどこの国の作曲家ですか？",a:"チェコ。"},
+{q:"スメタナはどこの地方の出身ですか？",a:"ボヘミア地方。"},
+{q:"スメタナはどこの都市で作曲を学びましたか？",a:"プラハ。"},
+{q:"スメタナが指揮者として活躍した国は？",a:"スウェーデン。"},
+{q:"スメタナは何年に帰国しましたか？",a:"1861年。"},
+{q:"スメタナは何のために帰国しましたか？",a:"チェコの独立運動に参加するため。"},
+{q:"スメタナは何語を勉強しましたか？",a:"チェコ語。"},
+{q:"スメタナは何歳からチェコ語を勉強しましたか？",a:"37歳。"},
+{q:"スメタナは何派の作曲家ですか？",a:"国民楽派。"},
+{q:"国民楽派とはどのような作曲家たちですか？",a:"民族独自の風土や伝説、民話などを作品に取り入れた作曲家。"},
+{q:"国民楽派が活躍したのは何世紀後半ですか？",a:"19世紀後半。"},
+{q:"国民楽派が生まれた背景は？",a:"民族独立の機運の高まり。"},
+{q:"国民楽派の特徴を答えなさい。",a:"民族独自の文化や民話を音楽に取り入れること。"},
+{q:"国民楽派の作曲家を1人答えなさい。",a:"ドボルザーク。"},
+{q:"国民楽派の作曲家を1人答えなさい。",a:"ムソルグスキー。"},
+{q:"国民楽派の作曲家を1人答えなさい。",a:"グリーグ。"},
+{q:"国民楽派の作曲家を1人答えなさい。",a:"チャイコフスキー。"},
+{q:"『ブルタバ』は何という作品の一部ですか？",a:"連作交響詩『我が祖国』。"},
+{q:"『我が祖国』は全部で何曲からなりますか？",a:"6曲。"},
+{q:"『ブルタバ』は『我が祖国』の第何曲ですか？",a:"第2曲。"},
+{q:"ブルタバとは何ですか？",a:"チェコを流れる川。"},
+{q:"ブルタバの別名は？",a:"モルダウ。"},
+{q:"交響詩とは何ですか？",a:"詩や物語、絵画などを音楽で表現した作品。"},
+{q:"交響詩の発展に貢献した作曲家は誰ですか？",a:"リスト。"},
+{q:"ブルタバの冒頭は何を表していますか？",a:"2つの源流。"},
+{q:"ブルタバの第1場面は何ですか？",a:"ブルタバの源流。"},
+{q:"ブルタバの第2場面は何ですか？",a:"森の狩猟。"},
+{q:"ブルタバの第3場面は何ですか？",a:"農村の結婚式。"},
+{q:"ブルタバの第4場面は何ですか？",a:"月光の夜の踊り。"},
+{q:"ブルタバの第5場面は何ですか？",a:"聖ヨハネの急流。"},
+{q:"ブルタバの第6場面は何ですか？",a:"広々としたブルタバの流れ。"},
+{q:"ブルタバの第7場面は何ですか？",a:"ヴィシェフラドの動機。"},
+{q:"ブルタバの主な木管楽器を答えなさい。",a:"フルート、クラリネット、ファゴット。"},
+{q:"ブルタバの主な金管楽器を答えなさい。",a:"ホルン。"},
+{q:"ブルタバで使われる弦楽器を答えなさい。",a:"ヴァイオリン。"},
+{q:"ブルタバで使われる弦楽器を答えなさい。",a:"ヴィオラ。"},
+{q:"ブルタバで使われる弦楽器を答えなさい。",a:"チェロ。"},
+{q:"ブルタバで使われる弦楽器を答えなさい。",a:"コントラバス。"},
+{q:"ブルタバで使われる打楽器を答えなさい。",a:"ティンパニ。"},
+{q:"チェコはヨーロッパのどの地域にありますか？",a:"中部ヨーロッパ。"},
+{q:"チェコの首都はどこですか？",a:"プラハ。"},
+{q:"ブルタバで描かれているものは何ですか？",a:"川の流れとチェコの自然や文化。"},
+{q:"『花』はどのような季節を歌った曲ですか？",a:"春。"},
+{q:"『花』は日本歌曲の代表作ですか？",a:"代表作である。"},
+{q:"滝廉太郎は日本近代音楽史でどのような存在ですか？",a:"日本を代表する作曲家の一人。"}
+
+];
+
+let index = 0;
+
+function displayQuestion(){
+    document.getElementById("number").innerHTML =
+        (index+1)+" / "+questions.length;
+
+    document.getElementById("question").innerHTML =
+        questions[index].q;
+
+    document.getElementById("answer").style.display="none";
+
+    document.getElementById("answer").innerHTML =
+        "<b>答え：</b>"+questions[index].a;
+}
+
+function showAnswer(){
+    document.getElementById("answer").style.display="block";
+}
+
+function nextQuestion(){
+    index++;
+    if(index>=questions.length){
+        index=0;
+    }
+    displayQuestion();
+}
+
+function shuffleQuestions(){
+    questions.sort(()=>Math.random()-0.5);
+    index=0;
+    displayQuestion();
+}
+
+displayQuestion();
+
+</script>
+
+</body>
+</html>
