@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>セキュリティテスト</title>
+
+<style>
+body{
+    font-family: sans-serif;
+    background:#eef5ff;
+    margin:0;
+    padding:20px;
+}
+
+.card{
+    background:white;
+    max-width:700px;
+    margin:auto;
+    border-radius:15px;
+    padding:20px;
+    box-shadow:0 3px 10px rgba(0,0,0,.15);
+}
+
+h1{
+    text-align:center;
+    color:#0066cc;
+}
+
+.progress{
+    height:18px;
+    background:#ddd;
+    border-radius:10px;
+    overflow:hidden;
+    margin:15px 0;
+}
+
+.bar{
+    background:#4caf50;
+    height:100%;
+    width:0%;
+    transition:.3s;
+}
+
+.category{
+    display:inline-block;
+    background:#1976d2;
+    color:white;
+    padding:5px 12px;
+    border-radius:20px;
+    margin-bottom:10px;
+}
+
+button{
+    width:100%;
+    padding:15px;
+    margin-top:10px;
+    font-size:18px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.choice{
+    background:#f0f0f0;
+}
+
+.next{
+    background:#1976d2;
+    color:white;
+}
+
+.retry{
+    background:#ff9800;
+    color:white;
+}
+
+.correct{
+    color:green;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.wrong{
+    color:red;
+    font-size:22px;
+    font-weight:bold;
+}
+
+#result{
+    display:none;
+}
+
+#explanation{
+    background:#ffffdd;
+    padding:15px;
+    margin-top:15px;
+    border-radius:10px;
+}
+
+label{
+    display:block;
+    margin-top:15px;
+}
+</style>
+
+</head>
+<body>
+
+<div class="card">
+
+<h1>セキュリティテスト</h1>
+
+<div id="quiz">
+
+<div id="count"></div>
+
+<div class="progress">
+<div class="bar" id="bar"></div>
+</div>
+
+<div class="category" id="category"></div>
+
+<h2 id="question"></h2>
+
+<div id="choices"></div>
+
+<div id="answerArea" style="display:none;">
+
+<div id="judge"></div>
+
+<div id="explanation"></div>
+
+<label>
+
+<button class="next" id="nextBtn">
+次へ
+</button>
+
+</div>
+
+</div>
+
+<div id="result">
+
+<h2>結果</h2>
+
+<h1 id="score"></h1>
+
+<div id="message"></div>
+
+<div id="retryArea"></div>
+
+</div>
+
+</div>
+
+<script>
+
+const questions=[
+
+{
+category:"写真",
+
+question:"家の前で撮った写真を投稿する時に確認することは？",
+
+choices:[
+"天気",
+"表札や住所が写っていないか",
+"カメラのメーカー"
+],
+
+answer:1,
+
+explanation:"表札や住所、車のナンバーなどは個人情報です。"
+},
+
+{
+category:"メール",
+
+question:"銀行から『口座が停止されます』というメールが届きました。",
+
+choices:[
+"メール内のURLを押す",
+"公式アプリや公式サイトから確認する",
+"友達へ転送する"
+],
+
+answer:1,
+
+explanation:"銀行を装うフィッシングメールが多くあります。メール内のURLは押さず公式サイトから確認しましょう。"
+},
+
+{
+category:"ブラウザ",
+
+question:"『あなたのスマホはウイルスに感染しています！』という画面が出ました。",
+
+choices:[
+"表示されたアプリをすぐ入れる",
+"画面を閉じる",
+"電話番号へ電話する"
+],
+
+answer:1,
+
+explanation:"偽の警告画面であることが多く、慌てて操作しないことが大切です。"
+},
+
+{
+category:"ダウンロード",
+
+question:"無料ゲームを『非公式サイト』からダウンロードしてもよい？",
+
+choices:[
+"無料ならよい",
+"公式ストアを利用する",
+"友達が使っていれば安全"
+],
+
+answer:1,
+
+explanation:"非公式サイトのアプリには危険なものが含まれることがあります。"
+},
+
+{
+category:"ゲーム",
+
+question:"ゲーム内で『課金してあげるからログイン情報を教えて』と言われました。",
+
+choices:[
+"教える",
+"絶対に教えない",
+"パスワードだけ教える"
+],
+
+answer:1,
+
+explanation:"ログイン情報は誰にも教えてはいけません。"
+},
+
+{
+category:"ゲーム",
+
+question:"ゲームで知り合った人から『会おう』と言われました。",
+
+choices:[
+"会う",
+"家族へ相談し、一人では会わない",
+"住所だけ教える"
+],
+
+answer:1,
+
+explanation:"ゲーム内の相手が本当のことを言っているとは限りません。"
+},
+
+{
+category:"AI",
+
+question:"AIが答えた内容は？",
+
+choices:[
+"必ず正しい",
+"間違っていることもある",
+"学校の先生より正しい"
+],
+
+answer:1,
+
+explanation:"AIは便利ですが、間違えることもあります。重要な情報は複数の資料で確認しましょう。"
+},
+
+{
+category:"AI",
+
+question:"AIで作った作文をそのまま提出してよい？",
+
+choices:[
+"よい",
+"学校のルールを確認し、自分で内容を理解する",
+"AIが作れば何でもよい"
+],
+
+answer:1,
+
+explanation:"AIは学習を助ける道具です。提出前に内容を理解し、学校のルールに従いましょう。"
+},
+
+{
+category:"ネット詐欺",
+
+question:"『スマホだけで月50万円！』という広告を見ました。",
+
+choices:[
+"すぐ申し込む",
+"疑って調べる",
+"友達にもすすめる"
+],
+
+answer:1,
+
+explanation:"『簡単に大金が稼げる』という広告は詐欺の可能性があります。"
+},
+
+{
+category:"ネット詐欺",
+
+question:"知らない人から『このQRコードを読み取って』と言われました。",
+
+choices:[
+"すぐ読む",
+"内容が分からないQRコードは読まない",
+"友達へ送る"
+],
+
+answer:1,
+
+explanation:"QRコードから偽サイトへ誘導されることがあります。"
+},
+
+{
+category:"ネット",
+
+question:"困ったことが起きた時、一番よい行動は？",
+
+choices:[
+"一人で悩む",
+"家族や先生など信頼できる大人へ相談する",
+"SNSへ投稿する"
+],
+
+answer:1,
+
+explanation:"ネットのトラブルは早めに相談することが解決への近道です。"
+},
+
+{
+category:"総合",
+
+question:"インターネットを安全に使うために一番大切なことは？",
+
+choices:[
+"全部信じる",
+"『本当かな？』と一度考える",
+"急いで操作する"
+],
+
+answer:1,
+
+explanation:"セキュリティで一番大切なのは『疑う力』です。焦らず、一度立ち止まって考える習慣を身につけましょう。"
+},
+
+{
+category:"SNS",
+
+question:"SNSで『このプレゼントに当選しました』というDMが届きました。",
+
+choices:[
+"すぐ応募する",
+"本当に公式アカウントか確認する",
+"友達全員へ送る"
+],
+
+answer:1,
+
+explanation:"偽アカウントによる詐欺が多くあります。フォロワー数や公式マークなどを確認しましょう。"
+},
+
+{
+category:"SNS",
+
+question:"SNSで知らない人から『写真を送って』と言われました。",
+
+choices:[
+"送る",
+"送らない",
+"制服なら送る"
+],
+
+answer:1,
+
+explanation:"一度送った写真は完全に消せません。知らない人には送りません。"
+},
+
+{
+category:"SNS",
+
+question:"SNSでケンカになりました。",
+
+choices:[
+"すぐ言い返す",
+"感情的に書き込まず、一度時間を置く",
+"相手の悪口を書き続ける"
+],
+
+answer:1,
+
+explanation:"ネットでは一度投稿すると完全には消せません。冷静になってから判断しましょう。"
+},
+
+{
+category:"スマホ",
+
+question:"スマホの充電がなくなりそうです。知らない人が置いたUSB充電器を使いますか？",
+
+choices:[
+"使う",
+"できるだけ使わない",
+"無料なら安全"
+],
+
+answer:1,
+
+explanation:"USB端子から情報を盗まれる危険性もあります。信頼できる充電器を使いましょう。"
+},
+
+{
+category:"スマホ",
+
+question:"Bluetoothは使わない時どうする？",
+
+choices:[
+"ONのまま",
+"OFFにする",
+"Wi-Fiも切る"
+],
+
+answer:1,
+
+explanation:"必要ない時はOFFにすると、電池の節約だけでなく安全面でも役立ちます。"
+},
+
+{
+category:"位置情報",
+
+question:"SNSへ写真を投稿する前に確認することは？",
+
+choices:[
+"画質",
+"位置情報が付いていないか",
+"天気"
+],
+
+answer:1,
+
+explanation:"位置情報から自宅や学校が分かることがあります。"
+},
+
+{
+category:"メール",
+
+question:"メールの差出人が学校名になっています。本物ですか？",
+
+choices:[
+"必ず本物",
+"差出人名だけでは判断できない",
+"学校名なら安全"
+],
+
+answer:1,
+
+explanation:"表示名は簡単に変更できます。本当の送信元を確認しましょう。"
+},
+
+{
+category:"ブラウザ",
+
+question:"ブラウザが『通知を許可してください』と表示しました。",
+
+choices:[
+"何でも許可する",
+"必要なサイトだけ許可する",
+"全部許可した方が便利"
+],
+
+answer:1,
+
+explanation:"不要な通知は詐欺広告が届く原因になることがあります。"
+},
+
+
+
+];
+
+let current=0;
+let score=0;
+let wrong=[];
+
+showQuestion();
+
+function showQuestion(){
+
+    document.getElementById("count").innerHTML =
+        `問題 ${current+1} / ${questions.length}`;
+
+    document.getElementById("bar").style.width =
+        ((current)/questions.length*100)+"%";
+
+    const q = questions[current];
+
+    category.innerHTML = q.category;
+    question.innerHTML = q.question;
+
+    choices.innerHTML = "";
+    answerArea.style.display = "none";
+
+    // -------------------------
+    // 選択肢をランダム化
+    // -------------------------
+    let items = q.choices.map((text,index)=>({
+        text:text,
+        correct:(index===q.answer)
+    }));
+
+    // Fisher-Yates Shuffle
+    for(let i=items.length-1;i>0;i--){
+        const j=Math.floor(Math.random()*(i+1));
+        [items[i],items[j]]=[items[j],items[i]];
+    }
+
+    // -------------------------
+    // ボタン生成
+    // -------------------------
+    items.forEach(item=>{
+
+        let b=document.createElement("button");
+
+        b.className="choice";
+        b.innerHTML=item.text;
+
+        b.onclick=function(){
+
+            document.querySelectorAll(".choice").forEach(btn=>{
+                btn.disabled=true;
+            });
+
+            answerArea.style.display="block";
+
+            if(item.correct){
+
+                judge.innerHTML="<div class='correct'>⭕ 正解！</div>";
+                score++;
+
+            }else{
+
+                judge.innerHTML="<div class='wrong'>❌ 不正解</div>";
+                wrong.push(current);
+
+            }
+
+            explanation.innerHTML=
+                "<b>解説</b><br>"+q.explanation;
+
+        };
+
+        choices.appendChild(b);
+
+    });
+
+}
+
+
+
+nextBtn.onclick=function(){
+
+current++;
+
+if(current<questions.length){
+
+showQuestion();
+
+}else{
+
+finish();
+
+}
+
+}
+
+function finish(){
+
+quiz.style.display="none";
+result.style.display="block";
+
+if(score==questions.length){
+
+let d=new Date();
+
+score.innerHTML="100点 🎉";
+
+message.innerHTML=`
+<p><b>おめでとうございます！</b></p>
+
+<p>スクリーンショットを撮って保護者へ提出してください。</p>
+
+<p>${d.toLocaleString()}</p>
+
+<p><b>今回のポイント</b><br>
+送られてきたURLは、相手が友達でもすぐ開かないこと。</p>
+`;
+
+}else{
+
+let percent=Math.round(score/questions.length*100);
+
+score.innerHTML=percent+"点";
+
+message.innerHTML=
+"<p><b>100点になるまで再チャレンジしてください。</b></p>";
+
+retryArea.innerHTML=
+"<button class='retry' onclick='location.reload()'>もう一度挑戦する</button>";
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
